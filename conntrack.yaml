@@ -1,4 +1,5 @@
 init_config:
+  snapshot_limit: 150
 
 instances:
   [{}]
