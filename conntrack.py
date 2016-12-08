@@ -45,13 +45,16 @@ class Conntrack(AgentCheck):
 
     def _save_conntrack(self, value, limit):
         import time
-        from shutil import copyfile
+        import commands
         from tempfile import mkstemp
         timestr = time.strftime("%Y%m%d-%H%M%S")
         _prefix = 'conntrack-%s-' % timestr
         tmpfile = mkstemp(suffix='.txt', prefix=_prefix)[1]
 
-        copyfile('/proc/net/ip_conntrack', tmpfile)
+        conntrack = commands.getstatusoutput('conntrack -L')
+        with open(tmpfile, "w") as tempfile:
+            tempfile.write(conntrack[1])
+        tempfile.close()
         _message_title = (
             "NAT: Conntrack entries (%d) exceeded limit (%d)"
             " - sample saved to '%s'."
