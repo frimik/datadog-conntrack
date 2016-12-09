@@ -51,7 +51,7 @@ class Conntrack(AgentCheck):
         _prefix = 'conntrack-%s-' % timestr
         tmpfile = mkstemp(suffix='.txt', prefix=_prefix)[1]
 
-        conntrack = commands.getstatusoutput('conntrack -L')
+        conntrack = commands.getstatusoutput('sudo conntrack -L')
         with open(tmpfile, "w") as tempfile:
             tempfile.write(conntrack[1])
         tempfile.close()

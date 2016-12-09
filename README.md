@@ -11,12 +11,13 @@ The sampling keeps a copy of the current conntrack entries after an event happen
 
 ## Requirements
 
-Snapshot method (which saves a tmp file with the conntrack entries) requires the `conntrack` command available in the path + the datadog agent needs to either run as root or get the `NET_CAP_ADMIN` capability.
+Snapshot method (which saves a tmp file with the conntrack entries) requires the `conntrack` command available in the path + the datadog agent needs to have sudoers rights to do access conntrack (because command require CAP_NET_ADMIN capabilities).
 
-The only way I've found so far is to do it on the binary itself, even though I've tried with `pam_cap.so` / `capability.conf`... let me know if you find out how to make it happen:
+The simplest way to allow dd-agent to be able to open conntrack is to add dd-agent group in sudoers
+like bellow :
 
 ```
-setcap cap_net_admin=ep /usr/sbin/conntrack
+echo "%dd-agent ALL=(root)NOPASSWD: /usr/sbin/conntrack -L" >> /etc/sudoers
 ```
 
 ### Requirements (Fedora)
