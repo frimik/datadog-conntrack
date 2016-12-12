@@ -54,7 +54,6 @@ class Conntrack(AgentCheck):
         conntrack = commands.getstatusoutput('sudo conntrack -L')
         with open(tmpfile, "w") as tempfile:
             tempfile.write(conntrack[1])
-        tempfile.close()
         _message_title = (
             "NAT: Conntrack entries (%d) exceeded limit (%d)"
             " - sample saved to '%s'."
