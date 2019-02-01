@@ -24,13 +24,13 @@ class Conntrack(AgentCheck):
 
     def _get_sysctl_metrics(self):
         max = sp.Popen(['cat', '/proc/sys/net/netfilter/nf_conntrack_max'],
-                          stdout=sp.PIPE, close_fds=True).communicate()[0]
+                       stdout=sp.PIPE, close_fds=True).communicate()[0]
 
         count = sp.Popen(['cat', '/proc/sys/net/netfilter/nf_conntrack_count'],
-                          stdout=sp.PIPE, close_fds=True).communicate()[0]
+                         stdout=sp.PIPE, close_fds=True).communicate()[0]
         conntrack_info = {
-          "conntrack_max" : max,
-          "conntrack_count" : count
+            "conntrack_max": max,
+            "conntrack_count": count
         }
         return conntrack_info
 
